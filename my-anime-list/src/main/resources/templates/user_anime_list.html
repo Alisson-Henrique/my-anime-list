@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<title>My Anime List</title>
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-static-top">
+		<div class="container-fluid">
+			<h1 class="title-site">
+				<font size="8" face="Times"> My Anime List</font>
+			</h1>
+			<div class="navbar-header">
+				<ul class="nav navbar-nav">
+					<li sec:authorize="hasRole('USER')"><a href="/">Lista de
+							Animes</a></li>
+					<li sec:authorize="hasRole('USER')"><a
+						href="/user/myanimelist">Meus Animes</a></li>
+				</ul>
+			</div>
+			<form action="/logout" method="post" class="navbar-form navbar-right">
+				<button type="submit" class="btn btn-default">
+					<span class="glyphicon glyphicon-log-out"></span> Sair
+				</button>
+			</form>
+		</div>
+
+	</nav>
+	<div th:object="${user}">
+		<h1 th:text="${user.username}"></h1>
+
+	</div>
+
+
+	<div class="panel panel-default">
+
+		<div class="panel-heading">
+			<div class="clearfix">
+				<h1 class="panel-title aw-titulo-panel">Meus Animes</h1>
+				<a class="btn btn-link aw-link-panel" href="/">Lista Animes</a>
+			</div>
+		</div>
+		<div></div>
+
+		<div class="panel-body">
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th class="text-center col-md-1">#</th>
+						<th class="text-center col-md-4">Título</th>
+						<th class="text-center col-md-4">Comentário</th>
+						<th class="text-center col-md-1">Nota</th>
+						<th class="col-md-1"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="anime : ${animesUser}">
+						<td class="text-center"><img
+							th:src="@{/anime/info/animesUser/{id}(id=${anime.anime})}"
+							alt="Responsive image" width="90" height="120"></td>
+						<td th:text="${anime.anime}"></td>
+						<td th:text="${anime.comment}"></td>
+						<td class="text-center" th:text="${anime.score.scoreName}">1</td>
+						<td class="text-center">
+							<div sec:authorize="hasRole('USER')">
+								<a class="btn btn-link btn-xs"
+									th:href="@{/anime/delete/evaluation/{id}(id = ${anime.id})}">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+										fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+  <path
+											d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+  <path
+											d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+</svg>
+								</a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="6" th:if="${#lists.isEmpty(animesUser)}">Nenhum
+							Anime foi encontrado</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+</body>
+</html>

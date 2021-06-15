@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<title>Cadastro de Animes</title>
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-static-top">
+		<div class="container-fluid">
+			<h1 class="title-site">
+				<font size="8" face="Times"> My Anime List</font>
+			</h1>
+			<div class="navbar-header"></div>
+		</div>
+	</nav>
+	<form class="form-horizontal" method="POST" enctype="multipart/form-data" action="/anime/newAnime"
+		th:object="${anime}">
+		<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+
+			<div th:each="detailedErro : ${#fields.detailedErrors()}">
+				<span th:text="${detailedErro.message}"></span>
+
+			</div>
+		</div>
+
+
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="clearfix">
+					<h1 class="panel-title aw-titulo-panel">Novo Anime</h1>
+					<a class="btn btn-link aw-link-panel" href="/">Lista de Animes</a>
+				</div>
+			</div>
+
+
+			<div class="panel-body">
+				<input type="hidden" th:field="*{id}" />
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('name')} ? has-error">
+					<label for="name" class="col-sm-2 control-label">Título</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="name"
+							th:field="*{name}" />
+					</div>
+				</div>
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('description')} ? has-error">
+					<label for="description" class="col-sm-2 control-label">Descrição</label>
+					<div class="col-sm-4">
+						<textarea class="form-control" id="description"
+							th:field="*{description}" rows="3"></textarea>
+					</div>
+				</div>
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('genres')} ? has-error">
+					<label for="genres" class="col-sm-2 control-label">Gêneros</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="genres"
+							th:field="*{genres}" />
+					</div>
+				</div>
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('source')} ? has-error">
+					<label for="source" class="col-sm-2 control-label">Material
+						Original</label>
+					<div class="col-sm-2">
+						<input type="text" class="form-control" id="source"
+							th:field="*{source}" />
+					</div>
+				</div>
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('aired')} ? has-error">
+					<label for="aired" class="col-sm-2 control-label">Data de
+						Lançamento</label>
+					<div class="col-sm-2">
+						<input type="text" class="form-control" id="aired"
+							th:field="*{aired}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="nbOfepisodes" class="col-sm-2 control-label">Número
+						de episódios</label>
+					<div class="col-sm-1">
+						<input type="text" class="form-control" id="nbOfepisodes"
+							th:field="*{nbOfepisodes}" />
+					</div>
+				</div>
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('studios')} ? has-error">
+					<label for="studios" class="col-sm-2 control-label">Studio</label>
+					<div class="col-sm-2">
+						<input type="text" class="form-control" id="studios"
+							th:field="*{studios}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="statusAnime" class="col-sm-2 control-label">Status</label>
+					<div class="col-sm-3">
+						<select class="form-control" name="statusAnime">
+							<option th:each="status : ${animeStatus}" th:value="${status}"
+								th:text="${status.statusString}"></option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<label for="exampleInputFile">Imagem de capa</label> <input
+							type="file" id="file" name= "file">
+						<p class="help-block">Escolha uma imagem do seu Computador.</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-primary">Salvar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+</html>

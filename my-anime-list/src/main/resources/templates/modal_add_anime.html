@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8" />
+<title>Cadastro MyAnimeList</title>
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-static-top">
+		<div class="container-fluid">
+			<h1 class="title-site">
+				<font size="8" face="Times"> My Anime List</font>
+			</h1>
+			<div class="navbar-header">
+				<ul class="nav navbar-nav">
+					<li sec:authorize="hasRole('USER')"><a href="/">Lista de
+							Animes</a></li>
+					<li sec:authorize="hasRole('USER')"><a
+						href="/user/myanimelist">Meus Animes</a></li>
+				</ul>
+			</div>
+			<form action="/logout" method="post" class="navbar-form navbar-right">
+				<button type="submit" class="btn btn-default">
+					<span class="glyphicon glyphicon-log-out"></span> Sair
+				</button>
+			</form>
+		</div>
+
+	</nav>
+
+	<div th:object="${anime}">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h1 class="anime-title">
+					<font size="6" face="Times" th:text="${anime.name}"></font>
+				</h1>
+				<div class="navbar-header"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<img th:src="@{/anime/info/exibir/{imagem}(imagem=${anime.imgPath})}" class="img-rounded"
+					alt="Responsive image">
+			</div>
+			<div class="col-md-3">
+				<b>Material Original</b>
+				<p th:text="${anime.source}"></p>
+			</div>
+
+			<div class="col-md-3">
+				<b>Studio</b>
+				<p th:text="${anime.studios}"></p>
+			</div>
+			<div class="col-md-3">
+				<b>Número de Episódios</b>
+				<p th:text="${anime.nbOfepisodes}"></p>
+			</div>
+			<div class="col-md-3">
+				<b>Status</b>
+				<p th:text="${anime.statusAnime.statusString}"></p>
+			</div>
+			<div class="col-md-6">
+				<b>Generos</b>
+				<p th:text="${anime.genres}"></p>
+			</div>
+			<div class="col-md-6">
+				<b>Descriçao</b>
+				<p th:text="${anime.description}"></p>
+			</div>
+		</div>
+	</div>
+	<form class="form-horizontal" method="POST" action="/anime/info/evaluation" th:object="${animeUser}">
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h1 class="panel-title">Faça Sua Avaliação</h1>
+			</div>
+
+			<div class="panel-body">
+			<input type="hidden" th:field="*{id}" />
+			
+				<div class="form-group">
+					<label for="comment" class="col-sm-2 control-label">Comentario</label>
+					<div class="col-sm-2">
+						<textarea class="form-control" id="comment" name="comment"
+							rows="3"></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="state" class="col-sm-2 control-label">Status</label>
+					<div class="col-sm-3">
+						<select class="form-control" name="state">
+							<option th:each="stateString : ${state}" th:value="${stateString}"
+								th:text="${stateString.stateName}"></option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="score" class="col-sm-2 control-label">Nota</label>
+					<div class="col-sm-3">
+						<select class="form-control" name="score">
+							<option th:each="scoreString : ${score}" th:value="${scoreString}"
+								th:text="${scoreString.scoreName}"></option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-primary">Salvar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

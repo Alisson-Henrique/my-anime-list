@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<title>My Anime List</title>
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-static-top">
+		<div class="container-fluid">
+			<h1 class="title-site">
+				<font size="8" face="Times"> My Anime List</font>
+			</h1>
+
+			<div class="navbar-header" th:object="${user}">
+
+
+				<ul class="nav navbar-nav">
+					<li sec:authorize="hasRole('ADMIN')"><a href="/anime/newAnime">Cadastrar
+							Animes</a></li>
+					<li sec:authorize="hasRole('ADMIN')"><a href="/">Lista de
+							Animes</a></li>
+				</ul>
+
+				<ul class="nav navbar-nav">
+					<li sec:authorize="hasRole('USER')"><a href="/">Lista de
+							Animes</a></li>
+					<li sec:authorize="hasRole('USER')"><a
+						href="/user/myanimelist">Meus Animes</a></li>
+				</ul>
+			</div>
+			<form action="/logout" method="post" class="navbar-form navbar-right">
+				<button type="submit" class="btn btn-default">
+					<span class="glyphicon glyphicon-log-out"></span> Sair
+				</button>
+			</form>
+			<div class="navbar-form navbar-right">
+				<font size="5" face="Times" color="white">Bem vindo, <span
+					sec:authentication="name"> </span></font>
+			</div>
+
+		</div>
+
+	</nav>
+
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="clearfix">
+				<h1 class="panel-title aw-titulo-panel">Adicione seus Animes</h1>
+
+
+				<div sec:authorize="hasRole('USER')">
+					<a class="btn btn-link aw-link-panel"
+						th:href="@{/user/{username}(username = ${user.username})}">Meus
+						Animes</a>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="panel-body">
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th class="text-center col-md-1">#</th>
+						<th class="text-center col-md-4">Nome</th>
+						<th class="text-center col-md-2">Status</th>
+						<th class="col-md-1"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="anime : ${animesList}">
+						<td class="text-center"><img
+							th:src="@{/anime/info/exibir/{imagem}(imagem=${anime.imgPath})}"
+							alt="Responsive image" width="90" height="120"></td>
+						<td th:text="${anime.name}"></td>
+						<td class="text-center"
+							th:text="${anime.statusAnime.statusString}"></td>
+						<td class="text-center">
+							<div sec:authorize="hasRole('ADMIN')">
+								<a class="btn btn-link btn-xs"
+									th:href="@{/anime/{id}(id = ${anime.id})}"> <svg
+										xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+										fill="currentColor" class="bi bi-pencil-square"
+										viewBox="0 0 16 16">
+  								<path
+											d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+  								<path fill-rule="evenodd"
+											d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+								</svg></a>
+							</div>
+							<div sec:authorize="hasRole('USER')">
+								<a class="btn btn-link btn-xs"
+									th:href="@{/anime/info/{id}(id = ${anime.id})}"> <svg
+										xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+										fill="currentColor" class="bi bi-plus-square-fill"
+										viewBox="0 0 16 16">
+  <path
+											d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
+</svg></a>
+							</div>
+							<div sec:authorize="hasRole('ADMIN')">
+								<a class="btn btn-link btn-xs"
+									th:href="@{/anime/delete/{id}(id = ${anime.id})}"> <svg
+										xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+										fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+  <path
+											d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+  <path
+											d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+</svg></a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="6" th:if="${#lists.isEmpty(animesList)}">Nenhum
+							Anime foi encontrado</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script src="/js/jquery-2.1.4.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+</body>
+
+</html>
