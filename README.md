@@ -8,11 +8,11 @@
 
 ## 📷Project Imagens
 <h1 align="center">
-  <img alt="My Anime List" title="Animes list" src="./github/anime_list.png"/>
+  <img alt="Anime List" title="Animes list" src="https://github.com/Alisson-Henrique/my-anime-list/issues/2#issue-923151730"/>
 </h1>
 
 <h1 align="center">
-  <img alt="My Anime List" title="Anime Info" src="./github/anime_info.png"/>
+  <img alt="Anime info" title="Anime Info" src="https://github.com/Alisson-Henrique/my-anime-list/issues/1#issue-923149512"/>
 </h1>
 
 ## 🗺️Features
