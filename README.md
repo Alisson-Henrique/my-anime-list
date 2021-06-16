@@ -7,13 +7,10 @@
 <p align="center">🚀 Application to list watched animes with their notes and comments.</p>
 
 ## 📷Project Imagens
-<h1 align="center">
-  <img alt="Anime List" title="Animes list" src="https://github.com/Alisson-Henrique/my-anime-list/issues/2#issue-923151730"/>
-</h1>
 
-<h1 align="center">
-  <img alt="Anime info" title="Anime Info" src="https://github.com/Alisson-Henrique/my-anime-list/issues/1#issue-923149512"/>
-</h1>
+![](https://user-images.githubusercontent.com/66741489/122300132-4a030580-ced5-11eb-8b89-3245d7127871.PNG)
+
+![](https://user-images.githubusercontent.com/66741489/122299787-d103ae00-ced4-11eb-9dbb-501335d30e93.PNG)
 
 ## 🗺️Features
 - [x] Authorization
